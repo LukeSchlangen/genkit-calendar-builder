@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { runFlow, streamFlow } from '@genkit-ai/next/client';
-import { menuSuggestionFlow } from '@/genkit/menuSuggestionFlow';
+import { calendarIdeationFlow } from '@/genkit/calendarIdeationFlow';
 
 export default function Home() {
-  const [menuItem, setMenuItem] = useState<string>('');
+  const [result, setResult] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [streamedText, setStreamedText] = useState<string>('');
 
@@ -15,12 +15,12 @@ export default function Home() {
 
     try {
       // Regular (non-streaming) approach
-      const result = await runFlow<typeof menuSuggestionFlow>({
+      const result = await runFlow<typeof calendarIdeationFlow>({
         url: '/api/menuSuggestion',
         input: { theme },
       });
 
-      setMenuItem(result.menuItem);
+      setResult(JSON.stringify(result, null, 2));
     } catch (error) {
       console.error('Error generating menu item:', error);
     } finally {
@@ -35,7 +35,7 @@ export default function Home() {
 
     try {
       // Streaming approach
-      const result = streamFlow<typeof menuSuggestionFlow>({
+      const result = streamFlow<typeof calendarIdeationFlow>({
         url: '/api/menuSuggestion',
         input: { theme },
       });
@@ -46,8 +46,8 @@ export default function Home() {
       }
 
       // Get the final complete response
-      const finalOutput = await result.output;
-      setMenuItem(finalOutput.menuItem);
+      const finalOutput: any = await result.output;
+      setResult(JSON.stringify(finalOutput, null, 2));
     } catch (error) {
       console.error('Error streaming menu item:', error);
     } finally {
@@ -86,10 +86,10 @@ export default function Home() {
         </div>
       )}
 
-      {menuItem && (
+      {result && (
         <div>
           <h3>Final Output:</h3>
-          <pre>{menuItem}</pre>
+          <pre>{result}</pre>
         </div>
       )}
     </main>

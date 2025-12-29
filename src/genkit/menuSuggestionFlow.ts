@@ -15,7 +15,9 @@ export const menuSuggestionFlow = ai.defineFlow(
     async ({ theme }, { sendChunk }) => {
         const { stream, response } = ai.generateStream({
             model: vertexAI.model('gemini-2.5-flash'),
-            prompt: `Invent a menu item for a ${theme} themed restaurant.`,
+            prompt: `Invent a layout for a ${theme} themed calendar.
+                    Your plan should be a markdown table with important
+                    dates with what event happened on that date.`,
         });
 
         for await (const chunk of stream) {
