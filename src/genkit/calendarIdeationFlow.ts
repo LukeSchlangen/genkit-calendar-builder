@@ -21,13 +21,11 @@ export const calendarIdeationFlow = ai.defineFlow(
         }),
     },
     async ({ theme }) => {
-        const { response } = await ai.generateStream({
+        const { text } = await ai.generate({
             model: vertexAI.model('gemini-2.5-flash'),
             prompt: `Create a list of important dates for a ${theme} themed calendar.
                     Only return the valid JSON itself (no backticks or anything).`,
         });
-
-        const { text } = await response;
 
         return { importantDates: JSON.parse(text) };
     }
