@@ -1,0 +1,9 @@
+---
+model: vertexai/gemini-2.5-flash-lite
+input:
+    schema: ImportantDatesInputSchema
+output:
+    schema: ImportantDatesOutputSchema
+---
+
+Create a list of important dates for a ${theme} themed calendar.

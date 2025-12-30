@@ -5,28 +5,31 @@ const ai = genkit({
     plugins: [vertexAI()],
 });
 
+const ImportantDatesInputSchema = ai.defineSchema('ImportantDatesInputSchema', z.object({ theme: z.string() }));
+
+const ImportantDatesOutputSchema = ai.defineSchema('ImportantDatesOutputSchema', z.array(
+    z.object({
+        date: z.string(),
+        event: z.string(),
+    })
+));
+
+const ImportantDatesPrompt = ai.prompt<
+    z.ZodTypeAny, // Input schema
+    typeof ImportantDatesOutputSchema, // Output schema
+    z.ZodTypeAny // Custom options schema
+>('important-dates');
+
+
 export const calendarIdeationFlow = ai.defineFlow(
     {
         name: 'calendarIdeationFlow',
-        inputSchema: z.object({ theme: z.string() }),
-        outputSchema: z.object({
-            importantDates: z.array(
-                z.object(
-                    {
-                        date: z.string(),
-                        event: z.string(),
-                    }
-                )
-            )
-        }),
+        inputSchema: ImportantDatesInputSchema,
+        outputSchema: ImportantDatesOutputSchema,
     },
     async ({ theme }) => {
-        const { text } = await ai.generate({
-            model: vertexAI.model('gemini-2.5-flash'),
-            prompt: `Create a list of important dates for a ${theme} themed calendar.
-                    Only return the valid JSON itself (no backticks or anything).`,
-        });
+        const { text } = await ImportantDatesPrompt({ theme });
 
-        return { importantDates: JSON.parse(text) };
+        return JSON.parse(text);
     }
 );
