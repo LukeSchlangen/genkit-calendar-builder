@@ -7,7 +7,7 @@ import { calendarIdeationFlow } from '@/genkit/calendarIdeationFlow';
 export default function Home() {
   const [result, setResult] = useState<string>('');
 
-  async function getMenuItem(formData: FormData) {
+  async function getImportantDateCalendar(formData: FormData) {
     const theme = formData.get('theme')?.toString() ?? '';
 
     const result = await runFlow<typeof calendarIdeationFlow>({
@@ -20,8 +20,8 @@ export default function Home() {
 
   return (
     <main>
-      <form action={getMenuItem}>
-        <label htmlFor="theme">Suggest a menu item for a restaurant with this theme: </label>
+      <form action={getImportantDateCalendar}>
+        <label htmlFor="theme">Suggest important dates for a calendar with this theme: </label>
         <input type="text" name="theme" id="theme" />
         <br />
         <button type="submit">
