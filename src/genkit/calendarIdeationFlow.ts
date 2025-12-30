@@ -15,9 +15,8 @@ const ImportantDatesOutputSchema = ai.defineSchema('ImportantDatesOutputSchema',
 ));
 
 const ImportantDatesPrompt = ai.prompt<
-    z.ZodTypeAny, // Input schema
-    typeof ImportantDatesOutputSchema, // Output schema
-    z.ZodTypeAny // Custom options schema
+    typeof ImportantDatesInputSchema,
+    typeof ImportantDatesOutputSchema
 >('calendar-ideation');
 
 
