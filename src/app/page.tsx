@@ -16,7 +16,7 @@ export default function Home() {
     try {
       // Regular (non-streaming) approach
       const result = await runFlow<typeof calendarIdeationFlow>({
-        url: '/api/menuSuggestion',
+        url: '/api/calendarIdeation',
         input: { theme },
       });
 
@@ -36,7 +36,7 @@ export default function Home() {
     try {
       // Streaming approach
       const result = streamFlow<typeof calendarIdeationFlow>({
-        url: '/api/menuSuggestion',
+        url: '/api/calendarIdeation',
         input: { theme },
       });
 

@@ -6,4 +6,4 @@ output:
     schema: ImportantDatesOutputSchema
 ---
 
-Create a list of important dates for a ${theme} themed calendar.
+Create a list of important dates for a {{theme}} themed calendar.
