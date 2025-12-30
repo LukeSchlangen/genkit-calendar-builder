@@ -20,15 +20,15 @@ const ImportantDatesPrompt = ai.prompt<
 >('calendar-ideation');
 
 
-export const calendarIdeationFlow = ai.defineFlow(
+export const calendarDateImagesFlow = ai.defineFlow(
     {
-        name: 'calendarIdeationFlow',
+        name: 'calendarDateImagesFlow',
         inputSchema: ImportantDatesInputSchema,
         outputSchema: ImportantDatesOutputSchema,
     },
     async ({ theme }) => {
         const { text } = await ImportantDatesPrompt({ theme });
-        const result = ImportantDatesOutputSchema.parse(JSON.parse(text));
-        return result;
+
+        return JSON.parse(text);
     }
 );
